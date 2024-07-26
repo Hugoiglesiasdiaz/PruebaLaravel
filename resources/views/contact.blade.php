@@ -6,7 +6,7 @@
     <h1>Contacto</h1>
     @if($errors->any())
         
-    @endif
+    @endif 
 
     <form method="POST" action="{{route('messages.store')}}">
         @csrf

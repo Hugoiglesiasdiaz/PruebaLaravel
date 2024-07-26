@@ -4,6 +4,7 @@
 
 @section('content')
 <h1>Portfolio</h1>
+<a href="{{ route('projects.create') }}">Crear Proyecto</a>
 
 <ul>
     
@@ -12,7 +13,7 @@
         @empty
             <li>No hay proyectos para mostrar</li>
         @endforelse
-        {{$projects->links()}}
+        
     
 </ul>
 @endsection
