@@ -2,17 +2,18 @@
 
 <label>
     Título del proyecto <br>
-    <input type="text" name="title" value="{{ old('title', $project->title)}}">
+    <input class="form-control border-0 bg-light shadow-sm" type="text" id="name" name="title" value="{{ old('title', $project->title)}}">
 </label>
 <br>
 <label>
     Url del proyecto <br>
-    <input type="text" name="url" value="{{ old('url', $project->url)}}">
+    <input class="form-control border-0 bg-light shadow-sm" type="text" id="url" name="url" value="{{ old('url', $project->url)}}">
 </label>
 <br>
 <label>
     Descripción del proyecto <br>
-    <textarea name="description">{{ old('title', $project->description)}}</textarea>
+    <textarea class="form-control border-0 bg-light shadow-sm" id="description" name="description">{{ old('title', $project->description)}}</textarea>
 </label>
 <br>
-<button type="submit">{{$btnText}}</button>
+<button class="btn btn-primary btn-lg w-100" type="submit">{{$btnText}}</button>
+<a class="btn btn-link w-100" href="{{route('projects.index')}}">Cancelar</a>

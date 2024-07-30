@@ -18,7 +18,7 @@ App::setLocale('es');
 Route::view('/', 'home') ->name('home');
 Route::view('/about', 'about') ->name('about');
 
-Route::resource('portafolio','ProjectController')->names('projects')->parameters(['portafolio' => 'project']);
+Route::resource('portafolio',ProjectController::class)->names('projects')->parameters(['portafolio' => 'project']);
 
 //Route::get('/portfolio', [ProjectController::class, 'index'])->name('projects.index');
 //Route::get('/portfolio/crear',[ProjectController::class, 'create'])->name('projects.create');
