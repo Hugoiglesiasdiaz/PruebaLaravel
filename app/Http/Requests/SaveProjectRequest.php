@@ -25,6 +25,7 @@ class SaveProjectRequest extends FormRequest
         return [
             'title' => 'required',
             'url' => ['required', Rule::unique('projects')->ignore($this->route('project'))],
+            'category_id' => ['required' , 'exists:categories,id'],
             'img' => [$this->route('project') ? 'nullable' : 'required', 'image'],
             'description' => 'required'
         ];

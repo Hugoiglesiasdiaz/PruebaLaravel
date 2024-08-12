@@ -7,7 +7,8 @@ use App\Http\Requests\SaveProjectRequest;
 use App\Models\Project;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-
+use App\Events\ProjectSaved;
+use App\Models\Category;
 class ProjectController extends Controller
 {
 
@@ -20,7 +21,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('projects.index', ['projects' => Project::orderBy('created_at', 'DESC')->get()]);
+        return view('projects.index', ['projects' => Project::with('category')->latest()->paginate()]);
     }
 
     public function show(Project $project)
@@ -33,7 +34,8 @@ class ProjectController extends Controller
     public function create()
     {
         return view('projects.create',[
-            'project' => new Project
+            'project' => new Project,
+            'categories' => Category::pluck('name','id')
         ]);
     }
 
@@ -42,13 +44,19 @@ class ProjectController extends Controller
         $project = new Project ($request->validated()); 
         $project->image = $request->file('image')->store('images');
         $project->save();
+
+        ProjectSaved::dispatch($project);
+
         return redirect()->route('projects.index')->with('status', 'El proyecto fue creado con éxito');
     }
 
     public function edit(Project $project)
     {
+
+
         return view('projects.edit', [
-            'project' => $project
+            'project' => $project,
+            'categories' => Category::pluck('name', 'id')
         ]);
     }
 
@@ -66,6 +74,8 @@ class ProjectController extends Controller
 
     // Actualizamos el proyecto con los datos validados
     $project->update(array_filter($request->validated()));
+
+    ProjectSaved::dispatch($project);
 
     return redirect()->route('projects.show', $project)->with('status', 'El proyecto fue actualizado con éxito');
     }	

@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +22,7 @@ Route::view('/about', 'about') ->name('about');
 
 Route::resource('portafolio',ProjectController::class)->names('projects')->parameters(['portafolio' => 'project']);
 
+Route::get('categorias/{category}',[CategoryController::class,'show'])->name('categories.show');
 //Route::get('/portfolio', [ProjectController::class, 'index'])->name('projects.index');
 //Route::get('/portfolio/crear',[ProjectController::class, 'create'])->name('projects.create');
 //Route::post('/portfolio', [ProjectController::class, 'store'])->name('projects.store');
