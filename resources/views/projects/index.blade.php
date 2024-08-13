@@ -14,9 +14,9 @@
                 <h1 class="display-4 mb-0">Proyectos</h1>
             @endisset
 
-            @auth
+            @can('create', $newProject)
                 <a class="btn btn-primary" href="{{ route('projects.create') }}">Crear Proyecto</a>
-            @endauth
+            @endcan
         </div>
         <p class="lead text-secondary">Proyectos realizados</p>
         <div class="d-flex flex-wrap justify-content-between align-items-start">
@@ -46,5 +46,28 @@
                 </div>
             @endforelse
         </div>
+        @can('view-deleted-projects')
+        <h4>Papelera</h4>
+            <ul>
+                @foreach ($deletedProjects as $deletedProject)
+                    <li class="list-group-item">{{ $deletedProject->title }}
+                        @can('restore', $deletedProject)
+                        <form method="POST" action="{{route('projects.restore',$deletedProject)}}" class="d-inline">
+                            @csrf @method('PATCH')
+                            <button class="btn btn-sm btn-info">Restaurar</button>
+                        </form>
+                        @endcan
+                        @can('force-delete', $deletedProject)
+                        <form method="POST"
+                        onsubmit="return confirm('¿Estás seguro de querer eliminar permanentemente este proyecto?')"
+                         action="{{route('projects.force-delete',$deletedProject)}}" class="d-inline">
+                            @csrf @method('DELETE')
+                            <button class="btn btn-sm btn-danger">Eliminar Permanentemente</button>
+                            </form>
+                        @endcan
+                    </li>
+                @endforeach
+            </ul>
+        @endcan
     </div>
 @endsection

@@ -21,15 +21,19 @@
                 <a href="{{ route('projects.index') }}">Regresar</a>
                 @auth
                     <div class="btn-group">
-                        <a class="btn-group btn-group-sm" href="{{ route('projects.edit', $project) }}">Editar</a>
+                    @can('update', $project)
+                        <a class="btn btn-primary btn-group btn-group-sm" href="{{ route('projects.edit', $project) }}">Editar</a>
+                    @endcan
+                    @can('delete', $project)
                         <a class="btn btn-danger" href="#"
                             onclick="document.getElementById('delete-project').submit()">Eliminar</a>
+                    @endcan
                     </div>
-
-                    <form class="d-none" id="delete-project" method="POST" action="{{ route('projects.destroy', $project) }}">
-                        @csrf @method('DELETE')
-                        <button>Eliminar</button>
-                    </form>
+                    <form class="d-none" id="delete-project" method="POST"
+                            action="{{ route('projects.destroy', $project) }}">
+                            @csrf @method('DELETE')
+                            <button>Eliminar</button>
+                        </form>
                 @endauth
 
             </div>

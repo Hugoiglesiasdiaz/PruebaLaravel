@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
+use App\Models\Project;
 class SaveProjectRequest extends FormRequest
 {
     /**

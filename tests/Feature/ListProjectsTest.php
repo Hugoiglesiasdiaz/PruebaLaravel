@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Project;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,19 +16,9 @@ class ListProjectsTest extends TestCase
      */
     public function test_can_see_all_projects()
     {
-        $this->withoutExceptionHandling();
-
-        $project = Project::create([
-            'title' => 'Proyecto 1',
-            'url' => 'proyecto-1',
-            'description' => 'Descripción del proyecto 1'
-        ]);
-
-        $project2 = Project::create([
-            'title' => 'Proyecto 3',
-            'url' => 'proyecto-2',
-            'description' => 'Descripción del proyecto 2'
-        ]);
+        $project = Project::factory()->create();
+        $project2 = Project::factory()->create();
+        
 
         $response = $this->get(route('projects.index'));
 
@@ -42,17 +33,8 @@ class ListProjectsTest extends TestCase
     }
 
     public function test_can_see_individual_projects(){
-        $project = Project::create([
-            'title' => 'Proyecto 1',
-            'url' => 'proyecto-1',
-            'description' => 'Descripción del proyecto 1'
-        ]);
-
-        $project2 = Project::create([
-            'title' => 'Proyecto 3',
-            'url' => 'proyecto-2',
-            'description' => 'Descripción del proyecto 2'
-        ]);
+        $project = Project::factory()->create();
+        $project2 = Project::factory()->create();
 
         $response = $this->get(route('projects.show', $project));
         $response->assertSee($project->title);

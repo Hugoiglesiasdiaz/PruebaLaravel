@@ -22,6 +22,9 @@ Route::view('/about', 'about') ->name('about');
 
 Route::resource('portafolio',ProjectController::class)->names('projects')->parameters(['portafolio' => 'project']);
 
+Route::patch('portafolio/{project}/restore',[ProjectController::class,'restore'])->name('projects.restore');
+Route::delete('portafolio/{project}/force-delete',[ProjectController::class,'forceDelete'])->name('projects.force-delete');
+
 Route::get('categorias/{category}',[CategoryController::class,'show'])->name('categories.show');
 //Route::get('/portfolio', [ProjectController::class, 'index'])->name('projects.index');
 //Route::get('/portfolio/crear',[ProjectController::class, 'create'])->name('projects.create');
